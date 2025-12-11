@@ -1,0 +1,5 @@
+@import "tailwindcss";
+@plugin "daisyui";
+.select-category option.placeholder-option {
+  color: #9ca3af; /* Tailwind gray-400 */
+}
