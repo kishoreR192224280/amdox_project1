@@ -1,5 +1,87 @@
 @import "tailwindcss";
 @plugin "daisyui";
+
 .select-category option.placeholder-option {
   color: #9ca3af; /* Tailwind gray-400 */
+}
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4);
+  animation: ripple-effect 0.6s linear;
+  transform: scale(0);
+  pointer-events: none;
+}
+
+@keyframes ripple-effect {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+@keyframes fadeSwitch {
+  0% {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-switch {
+  display: inline-block;
+  animation: fadeSwitch 0.5s ease forwards;
+}
+.odometer {
+  display: inline-flex;
+  gap: 1px;
+  overflow: hidden;
+  vertical-align: middle;
+  font-size: 1.5rem;     /* ✅ text-2xl */
+  line-height: 2rem;    /* ✅ text-2xl */
+  font-weight: 600;     /* optional: matches heading weight */
+}
+
+.digit-column {
+  height: 2rem;         /* matches line-height */
+  width: 1ch;
+  overflow: hidden;
+  position: relative;
+}
+
+.digit-stack {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: transform 0.5s ease-in-out;
+}
+
+.digit-stack span {
+  display: block;
+  height: 2rem;
+  line-height: 2rem;
+}
+@layer components {
+  .input-base {
+    @apply
+      block w-full h-14 rounded-md bg-white px-4
+      text-base text-black
+      border border-gray-300
+      placeholder:text-gray-500
+      leading-normal
+      shadow-sm
+      transition-shadow duration-200
+      focus:outline-none
+      focus:ring-2 focus:ring-teal-600
+      focus:shadow-md;
+  }
+
+  .input-error {
+    @apply border-red-500 focus:ring-red-500 shadow-red-200;
+  }
+}
+body {
+  overflow-x: hidden;
 }

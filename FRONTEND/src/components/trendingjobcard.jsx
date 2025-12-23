@@ -1,22 +1,17 @@
 export default function TrendingJobCard({ img, title, count }) {
   return (
-    <div
-      className="min-w-[230px] bg-blue-100 rounded-2xl p-6 shadow-md hover:shadow-xl hover:scale-105 transition-all cursor-pointer">
-      {/* Icon Box */}
-      <div
-        className="
-          bg-blue-200 rounded-xl h-24 w-24 mx-auto flex items-center justify-center shadow-md"
-      >
-        <img src={img} alt={title} className="w-12 h-12" />
+    <div className="min-w-[230px] rounded-2xl p-6 bg-gradient-to-br from-amber-50 via-white to-amber-100 border border-amber-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer ">
+      <div className="h-24 w-24 mx-auto flex items-center justify-center rounded-2xl bg-amber-600 shadow-lg shadow-amber-500/30 transition-transform duration-300 hover:scale-110">
+        <img src={img} alt={title} className="w-12 h-12 brightness-0 invert opacity-90 saturate-0" />
+
       </div>
-      {/* Title */}
-      <h3 className="text-xl font-bold text-center mt-6 text-gray-900">
+
+      <h3 className="text-xl font-bold text-center mt-6 text-gray-800">
         {title}
       </h3>
 
-      {/* Count */}
-      <p className="text-lg text-blue-700 font-semibold text-center mt-2">
-        Jobs: {count}
+      <p className="text-lg font-semibold text-center mt-2 text-amber-600">
+        {count} Jobs
       </p>
     </div>
   );
