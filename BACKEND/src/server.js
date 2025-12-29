@@ -3,7 +3,10 @@ dotenv.config();
 
 import express from "express";
 import cors from "cors";
+
 import authRoutes from "./routes/auth.routes.js";
+import jobRoutes from "./routes/jobRoutes.js"; 
+import employerRoutes from "./routes/employerRoutes.js";
 import { connectDB } from "./config/db.js";
 import { protect } from "./middleware/authMiddleware.js";
 
@@ -12,10 +15,12 @@ const app = express();
 // --------------------
 // Middlewares
 // --------------------
-app.use(cors({
-  origin: "http://localhost:5173",
-  credentials: true,
-}));
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
+);
 
 app.use(express.json());
 
@@ -26,8 +31,13 @@ app.get("/", (req, res) => {
   res.send("API is running...");
 });
 
-// 🔐 Auth routes (signup, login)
+// 🔐 Auth routes
 app.use("/api/auth", authRoutes);
+
+// 💼 Job routes
+app.use("/api/jobs", jobRoutes);
+
+app.use("/api/employers", employerRoutes);
 
 // 🔒 Protected test route
 app.get("/api/protected", protect, (req, res) => {

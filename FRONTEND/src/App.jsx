@@ -12,7 +12,6 @@ import EmployersPage from './pages/Employer'
 import SingleEmployerPage from './pages/SingleEmployer'
 import DashboardPage from './pages/Dashboard'
 import AppliedJobs from "./components/aplliedjobs";
-import Navbar from './navigation/navbar'
 import Toast, { Toaster } from 'react-hot-toast'
 const App = () => {
   return (
@@ -30,7 +29,8 @@ const App = () => {
         <Route path="/EmployersPage" element={<EmployersPage/>}/>
         <Route path="/SingleEmployerPage" element={<SingleEmployerPage/>}/>
         <Route path="/DashboardPage" element={<DashboardPage/>}/>
-        <Route path="/appliedjobs" element={<AppliedJobs />} />       
+        <Route path="/appliedjobs" element={<AppliedJobs />} />
+        <Route path="/Single" element={<SingleEmployerPage />} />        
       </Routes>
     </div>
   )

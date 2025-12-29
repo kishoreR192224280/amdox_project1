@@ -1,29 +1,41 @@
+import { NavLink } from "react-router-dom";
 import SmallSearchBar from "../components/smallsearchbar";
-import Home from '../pages/Home'
-import Findjob from '../pages/findjob'
-import EmployersPage from '../pages/Employer'
-import DashboardPage from '../pages/Dashboard'
+
 export default function Navbar() {
+  const linkClass = ({ isActive }) =>
+    `pb-1 transition ${
+      isActive
+        ? "border-b-2 border-white"
+        : "hover:border-b-2 hover:border-blue-300"
+    }`;
+
   return (
     <div className="w-full bg-white shadow">
 
       {/* TOP BLUE MENU BAR */}
       <div className="w-full bg-blue-600 px-10 py-4 flex items-center justify-center">
+        <div className="flex items-center gap-16 text-lg font-medium text-white">
 
-        {/* LEFT — Logo */}
+          <NavLink to="/Home" className={linkClass}>
+            Home
+          </NavLink>
 
-        {/* CENTER — Menu Links */}
-        <div className="flex items-center gap-16 text-lg font-medium text-white ">
-          <a href="/Home">Home</a>
-          <a href="/findjob">FindJob</a>
-          <a href="/EmployersPage">Employers</a>
-          <a href="/DashboardPage" className="border-b-2 border-blue-700 pb-1">Dashboard</a>
-          <a href="/support">Customer Support</a>
-        </div>
+          <NavLink to="/findjob" className={linkClass}>
+            Find Job
+          </NavLink>
 
-        {/* RIGHT — Notification + Profile */}
-        <div className="flex items-center gap-6">
-          
+          <NavLink to="/EmployersPage" className={linkClass}>
+            Employer
+          </NavLink>
+
+          <NavLink to="/DashboardPage" className={linkClass}>
+            Dashboard
+          </NavLink>
+
+          <NavLink to="/support" className={linkClass}>
+            Customer Support
+          </NavLink>
+
         </div>
       </div>
 

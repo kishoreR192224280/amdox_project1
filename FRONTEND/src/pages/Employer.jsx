@@ -1,7 +1,6 @@
 import { useState } from "react";
 import EmployerFilter from "../components/employerfilter";
 import Navbar from "../navigation/navbar";
-import SearchFilters from "../components/searchfilter";
 import Pagination from "../components/pagination";
 
 export default function EmployersPage() {
@@ -25,13 +24,7 @@ export default function EmployersPage() {
   return (
     <div className="w-full min-h-screen bg-gray-50">
       <Navbar />
-
-      {/* Search Bar */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 mt-4">
-        <SearchFilters />
-      </div>
-
-      {/* MAIN LAYOUT */}
+    {/* MAIN LAYOUT */}
       <div className="max-w-7xl mx-auto flex gap-6 px-4 sm:px-6 py-6">
 
         {/* DESKTOP FILTER SIDEBAR */}

@@ -1,6 +1,5 @@
 import { useState } from "react";
 import useLanguage from "../data/uselanguage";
-import PageLayout from "../layout/PageLayout";
 import TrendingJobCard from "../components/trendingjobcard";
 import { categories, highlightedJobs, dreamLocations, coolPlaces, careerTips, } from "../data/array";
 export default function Home() {
