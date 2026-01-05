@@ -11,6 +11,7 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
       unique: true,
+      lowercase: true,
       trim: true,
     },
     email: {
@@ -22,7 +23,38 @@ const userSchema = new mongoose.Schema(
     password: {
       type: String,
       required: true,
-      select: false, 
+      select: false,
+    },
+
+    // ✅ DASHBOARD FIELDS
+    appliedJobs: [
+      {
+        jobId: mongoose.Schema.Types.ObjectId,
+        appliedAt: {
+          type: Date,
+          default: Date.now,
+        },
+      },
+    ],
+
+    favoriteJobs: [
+      {
+        jobId: mongoose.Schema.Types.ObjectId,
+        savedAt: {
+          type: Date,
+          default: Date.now,
+        },
+      },
+    ],
+
+    appliedJobsCount: {
+      type: Number,
+      default: 0,
+    },
+
+    favoriteJobsCount: {
+      type: Number,
+      default: 0,
     },
   },
   { timestamps: true }

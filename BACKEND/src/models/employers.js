@@ -9,4 +9,8 @@ const employerSchema = new mongoose.Schema({
   createdAt: Date
 });
 
-export default mongoose.model("employer", employerSchema);
+export default mongoose.model(
+  "Employer",          // model name (any, used internally)
+  employerSchema,
+  "employer"         
+);

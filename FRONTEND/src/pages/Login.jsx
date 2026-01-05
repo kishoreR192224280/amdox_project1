@@ -1,12 +1,13 @@
-import { useState } from "react";
+
 import { toast, Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router";
-
+import { useState, useEffect } from "react";
+import isAuthenticated from "../utils/auth.js"
 const Login = () => {
-
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+
+  const [email, setEmail] = useState("mailingkishore73@gmail.com");
+  const [password, setPassword] = useState("Ambi**tion21");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -23,16 +24,22 @@ const Login = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          email,
-          password,
-        }),
+        body: JSON.stringify({ email, password }),
       });
 
       const data = await res.json();
 
+      console.log("LOGIN RESPONSE:", data); // 🔍 DEBUG
+
       if (!res.ok) {
         toast.error(data.message || "Login failed");
+        setLoading(false);
+        return;
+      }
+
+      // ✅ MUST EXIST
+      if (!data.token) {
+        toast.error("Token missing from server");
         setLoading(false);
         return;
       }
@@ -43,18 +50,21 @@ const Login = () => {
       toast.success("Login successful 🎉");
 
       setTimeout(() => {
-        navigate("/Home"); // home route
-      }, 1500);
+        navigate("/DashboardPage");
+      }, 1000);
 
-      setLoading(false);
-
-    } catch (error) {
-      console.error(error);
-      toast.error("Server error. Try again.");
+    } catch (err) {
+      toast.error("Server error");
+    } finally {
       setLoading(false);
     }
   };
-
+  
+  useEffect(() => {
+    if (isAuthenticated()) {
+      navigate("/DashboardPage");
+    }
+  }, []);
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center px-12 py-12">
       <Toaster position="top-right" />

@@ -1,6 +1,5 @@
 import express from "express";
-import { getEmployers } from "../controllers/EmployerController.js";
-
+import { getEmployers } from "../controllers/employerController.js";
 
 const router = express.Router();
 

@@ -12,16 +12,16 @@ export default function FindJob() {
   const [error, setError] = useState("");
 
   const [filters, setFilters] = useState({
-  keyword: "",
-  location: "",
-  jobType: "",
-  salaryMin: "",
-  salaryMax: "",
-  experience: ""
-});
+    keyword: "",
+    location: "",
+    jobType: "",
+    salaryMin: "",
+    salaryMax: "",
+    experience: ""
+  });
 
 
-  
+
   const fetchJobs = async () => {
     setLoading(true);
     setError("");
@@ -56,6 +56,7 @@ export default function FindJob() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         {/* 🔍 Search Filters */}
         <SearchFilters
+          mode="job"
           filters={filters}
           setFilters={setFilters}
           onSearch={fetchJobs}
@@ -115,14 +116,15 @@ export default function FindJob() {
             {jobs.length > 0 ? (
               jobs.map((job) => (
                 <JobCard
-                  key={job._id}
+                  id={job._id}
                   logo={job.logo}
-                  company={job.company}
                   title={job.jobTitle}
+                  company={job.company}
                   location={job.location}
-                  salary={job.salary.display}
+                  salary={job.salary?.display}
                   type={job.jobType}
                 />
+
               ))
             ) : (
               <p className="col-span-full text-center text-gray-500">

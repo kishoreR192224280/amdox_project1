@@ -9,6 +9,7 @@ import jobRoutes from "./routes/jobRoutes.js";
 import employerRoutes from "./routes/employerRoutes.js";
 import { connectDB } from "./config/db.js";
 import { protect } from "./middleware/authMiddleware.js";
+import cookieParser from "cookie-parser";
 
 const app = express();
 
@@ -30,6 +31,8 @@ app.use(express.json());
 app.get("/", (req, res) => {
   res.send("API is running...");
 });
+
+app.use(cookieParser());
 
 // 🔐 Auth routes
 app.use("/api/auth", authRoutes);

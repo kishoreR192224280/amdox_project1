@@ -1,4 +1,23 @@
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-hot-toast";
+import { logout } from "../utils/auth";
+
+
+
 export default function CandidateDashboardSidebar({ activePage, setActivePage }) {
+  const handleLogout = () => {
+    const confirmLogout = window.confirm("Are you sure you want to logout?");
+
+    if (!confirmLogout) return;
+
+    logout();
+
+    toast.success("Logged out successfully 👋");
+
+    setTimeout(() => {
+      navigate("/Login");
+    }, 800);
+  };
   return (
     <div className="w-64 bg-white border-r hidden lg:block p-6">
 
@@ -127,16 +146,19 @@ export default function CandidateDashboardSidebar({ activePage, setActivePage })
       </div>
 
       {/* LOGOUT */}
-      <button className="mt-14 flex items-center gap-3 text-gray-500 hover:text-red-500 px-3">
+      <button
+        onClick={handleLogout}
+        className="mt-14 flex items-center gap-3 text-gray-500 hover:text-red-500 px-3 transition"
+      >
         {/* Logout Icon */}
         <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.8">
           <path d="M9 3H5v14h4" />
           <path d="M15 12l-3-3 3-3" />
           <path d="M12 9h8" />
         </svg>
-
         Log-out
       </button>
+
     </div>
   );
 }

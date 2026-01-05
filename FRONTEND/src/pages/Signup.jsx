@@ -107,7 +107,7 @@ const Signup = () => {
       toast.success("Account created successfully 🎉");
 
       setTimeout(() => {
-        navigate("/login");
+        navigate("/Login");
       }, 1500);
     } catch (err) {
       toast.error("Fetch failed");
@@ -134,7 +134,10 @@ const Signup = () => {
 
           <p className="text-sm text-black mb-6">
             Already have an account?{" "}
-            <span className="text-teal-600 cursor-pointer hover:underline">
+            <span
+              onClick={() => navigate("/Login")}
+              className="text-teal-600 cursor-pointer hover:underline"
+            >
               Log In
             </span>
           </p>

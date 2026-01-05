@@ -1,34 +1,66 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import SearchFilters from "../components/searchfilter";
 import EmployerFilter from "../components/employerfilter";
 import Navbar from "../navigation/navbar";
 import Pagination from "../components/pagination";
 
 export default function EmployersPage() {
   const [showFilter, setShowFilter] = useState(false);
+  const [employers, setEmployers] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [filters, setFilters] = useState({
+    keyword: "",
+    location: "",
+    industry: "",
+    companySize: "",
+    orgType: "",
+    openJobs: ""
+  });
 
-  const employers = [
-    { name: "Dribbble", logo: "/dribbble.png", country: "United States" },
-    { name: "Udemy", logo: "/udemy.png", country: "China" },
-    { name: "Figma", logo: "/figma.png", country: "United States" },
-    { name: "Google", logo: "/google.png", country: "Australia" },
-    { name: "Microsoft", logo: "/microsoft.png", country: "Australia" },
-    { name: "Twitter", logo: "/twitter.png", country: "Australia" },
-    { name: "Instagram", logo: "/instagram.png", country: "Australia" },
-    { name: "Youtube", logo: "/youtube.png", country: "Canada" },
-    { name: "Apple", logo: "/apple.png", country: "United States" },
-    { name: "Slack", logo: "/slack.png", country: "Germany" },
-    { name: "Reddit", logo: "/reddit.png", country: "France" },
-    { name: "Upwork", logo: "/upwork.png", country: "China" },
-  ];
+  const fetchEmployers = async () => {
+    try {
+      setLoading(true);
+
+      const params = new URLSearchParams(filters).toString();
+
+      const res = await fetch(
+        `http://localhost:5000/api/employers?${params}`
+      );
+
+      if (!res.ok) throw new Error("Failed to fetch employers");
+
+      const data = await res.json();
+      setEmployers(data);
+    } catch (error) {
+      console.error("Error fetching employers:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchEmployers();
+  }, []);
+  
+  useEffect(() => {
+  console.log("Employer filters:", filters);
+}, [filters]);
+
 
   return (
     <div className="w-full min-h-screen bg-gray-50">
       <Navbar />
-    {/* MAIN LAYOUT */}
+      <SearchFilters
+        mode="employer"
+        filters={filters}
+        setFilters={setFilters}
+        onSearch={fetchEmployers}
+      />
+      {/* MAIN LAYOUT */}
       <div className="max-w-7xl mx-auto flex gap-6 px-4 sm:px-6 py-6">
-
         {/* DESKTOP FILTER SIDEBAR */}
         <div className="hidden lg:block w-64">
+
           <EmployerFilter />
         </div>
 
@@ -41,8 +73,7 @@ export default function EmployersPage() {
               className="
               absolute left-0 top-0 h-full w-72 bg-white shadow-xl p-5
               transition-transform duration-300 
-              translate-x-0
-            "
+              translate-x-0"
             >
               {/* Close Button */}
               <button
@@ -103,42 +134,52 @@ export default function EmployersPage() {
           {/* === EMPLOYERS LIST === */}
           <div className="flex flex-col gap-4">
 
-            {employers.map((emp, i) => (
-              <div
-                key={i}
-                className="
-                bg-blue-50 border border-blue-100 rounded-xl p-6 
-                flex justify-between items-center 
-                hover:shadow-md transition
-              "
-              >
-                {/* LEFT */}
-                <div className="flex items-center gap-4">
-                  <img src={emp.logo} className="w-12 h-12 rounded-lg" />
+            {loading ? (
+              <p className="text-gray-500">Loading employers...</p>
+            ) : (
+              employers.map((emp) => (
+                <div
+                  key={emp._id}
+                  className="
+        bg-blue-50 border border-blue-100 rounded-xl p-6 
+        flex justify-between items-center 
+        hover:shadow-md transition
+      "
+                >
+                  {/* LEFT */}
+                  <div className="flex items-center gap-4">
+                    <img
+                      src={emp.logo}
+                      className="w-12 h-12 rounded-lg"
+                      alt={emp.company}
+                    />
 
-                  <div>
-                    <h3 className="font-semibold text-lg text-gray-800">
-                      {emp.name}
-                    </h3>
+                    <div>
+                      <h3 className="font-semibold text-lg text-gray-800">
+                        {emp.company}
+                      </h3>
 
-                    <p className="text-gray-500 text-sm flex items-center gap-2">
-                      <span className="text-blue-500 text-base">📍</span>
-                      {emp.country}
-                      <span>•</span>
-                      {emp.openJobs} open jobs
-                    </p>
+                      <p className="text-gray-500 text-sm flex items-center gap-2">
+                        <span className="text-blue-500 text-base">📍</span>
+                        {emp.location}
+                        <span>•</span>
+                        {emp.openJobs} open jobs
+                      </p>
+                    </div>
                   </div>
-                </div>
 
-                {/* RIGHT BUTTON */}
-                <button className="
-                px-5 py-2 bg-blue-500 text-white rounded-lg 
-                flex items-center gap-2 hover:bg-blue-600 transition
-              ">
-                  Open Position →
-                </button>
-              </div>
-            ))}
+                  {/* RIGHT BUTTON */}
+                  <button
+                    className="
+          px-5 py-2 bg-blue-500 text-white rounded-lg 
+          flex items-center gap-2 hover:bg-blue-600 transition
+        "
+                  >
+                    Open Position →
+                  </button>
+                </div>
+              ))
+            )}
 
           </div>
 
